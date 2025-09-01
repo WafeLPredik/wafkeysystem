@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Key Generator</title>
+  <style>
+    body { font-family: Arial, sans-serif; text-align: center; margin: 50px; }
+    input, button { margin: 10px; padding: 10px; }
+    textarea { width: 90%; height: 120px; margin-top: 20px; }
+  </style>
+</head>
+<body>
+  <h2>🔑 Key Generator</h2>
+  <input id="days" type="number" placeholder="Durasi (hari)">
+  <button onclick="generateKey()">Generate</button>
+  <br>
+  <textarea id="output" readonly></textarea>
+
+  <script>
+    function generateKey() {
+      const days = parseInt(document.getElementById("days").value);
+      if (!days || days < 1) {
+        alert("Masukkan durasi hari yang valid!");
+        return;
+      }
+
+      const now = new Date();
+      const expireDate = new Date(now.getTime() + days*24*60*60*1000);
+
+      const key = "KEY-" + Math.random().toString(36).substr(2, 10).toUpperCase();
+      const data = {
+        key: key,
+        created: now.toISOString(),
+        expire: expireDate.toISOString()
+      };
+
+      document.getElementById("output").value = JSON.stringify(data, null, 2);
+    }
+  </script>
+</body>
+</html>
